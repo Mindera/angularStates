@@ -12,13 +12,14 @@ angular.module('angularStates')
         outraInfo: {
             ok: true
         },
+        singleBoolean: true,
 
         name: 'otherService',
 
         init: function() {
             StatesService.register(this, service.name, [{
                 'stuff': service.stuff
-            }, 'outraInfo']);
+            }, 'outraInfo', 'singleBoolean']);
         },
 
         update: function() {
@@ -31,11 +32,17 @@ angular.module('angularStates')
                     ok: true
                 };
             }
+            service.singleBoolean = !service.singleBoolean;
             console.log('updated outra info ok:', service.outraInfo);
+            service.save();
         },
 
         save: function() {
             StatesService.saveState(service.name); 
+        },
+
+        reset: function() {
+            StatesService.resetState(service.name);
         }
     };
 

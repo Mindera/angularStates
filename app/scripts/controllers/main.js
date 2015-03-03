@@ -12,8 +12,12 @@ angular.module('angularStates')
     console.log(service.stuff, service.outraInfo);
     $scope.serviceData = {
         data1: service.stuff,
-        data2: service.outraInfo
+        data2: service.outraInfo,
+        data3: service.singleBoolean
     };
+    $scope.reset = function() {
+      service.reset();
+    }
     $scope.action = function() {
       service.update();
       service.save();

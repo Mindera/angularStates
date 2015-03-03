@@ -5,6 +5,7 @@ angular.module('angularStates')
     // TODO: Some stuff to implement in the future:
     // - expiration time for each object saved
     // - adapters so that it uses cookies/indexDB for example
+    // - reset state method
 
     var service = {
         namespace: $rootElement.attr('ng-app') ? $rootElement.attr('ng-app') + '.' : '',
@@ -13,8 +14,8 @@ angular.module('angularStates')
         /**
          * Registers a service instance on the persistence service
          * @param {Object} serviceInstance registered service instance - for updating its state afterwards
-         * @param {String} keyName key used for mapping items to the each service
-         * @param {Array}  fields service properties that should be saved. Note: the elemnts of this array
+         * @param {String} keyName key used for mapping items the each service
+         * @param {Array}  fields service properties that should be saved. Note: the elements of this array
          * can be strings (name of the field) or objects (containing default value to use in case of absence
          * in the persistence layer, and expiration time)
          * @throws {Error} will throw if the current keyName is already in use  
@@ -25,7 +26,7 @@ angular.module('angularStates')
             }
             service.mapping[keyName] = {
                 instance: serviceInstance,
-                objects: {}
+                data: {}
             };
 
             fields.map(function(field) {
@@ -38,18 +39,22 @@ angular.module('angularStates')
             });
         },
 
+        /**
+         * Save the service state, based on the values mapped for the keyName provided
+         * @param {String} keyName key used for mapping items to the service
+         **/
         saveState: function(keyName) {
             var serviceInstance = service.mapping[keyName].instance;
             var currentVal;
             var currentValStr;
             // Save each object for that keyname
-            var objects = service.mapping[keyName].objects;
-            Object.keys(objects).forEach(function(key) {
+            var data = service.mapping[keyName].data;
+            Object.keys(data).forEach(function(key) {
                 currentVal = serviceInstance[key];
                 key = service.namespace + key;
                 // if the value is defined, save it to LS, otherwise 
                 // remove it from LS
-                if (currentVal) {
+                if (typeof currentVal !== 'undefined') {
                     currentValStr = JSON.stringify(currentVal);
                     $window.localStorage.setItem(key, currentValStr);
                 } else {
@@ -58,36 +63,64 @@ angular.module('angularStates')
             });
         },
 
+        /**
+         * Recovers the service state
+         * @param {String} keyName key used for mapping items to the service
+         **/
         recoverState: function(keyName) {
             var serviceInstance = service.mapping[keyName].instance;
             var recoveredVal;
             var recoveredValStr;
-            var objects = service.mapping[keyName].objects;
+            var data = service.mapping[keyName].data;
             var fullKey;
-            Object.keys(objects).forEach(function(key) {
+            Object.keys(data).forEach(function(key) {
                 fullKey = service.namespace + key;
-                // if value is defined in the LS, save it to the
+                // if value is defined in the persitence layer, save it to the
                 // service instance, otherwise save the default value present
-                // in the objects property of the registry
+                // in the data property of the registry
                 recoveredValStr = $window.localStorage.getItem(fullKey);
                 if (recoveredValStr) {
                     recoveredVal = JSON.parse(recoveredValStr);
-                    serviceInstance[key] = recoveredVal;
+                    recoverValue(serviceInstance[key], recoveredVal, keyName, key);
                 } else {
-                    serviceInstance[key] = service.mapping[keyName].objects[key];
+                    recoverValue(serviceInstance[key], service.mapping[keyName].data[key]);
                 }
             }); 
+        },
+
+        /**
+         * Resets the service state
+         * @param {String} keyName key used for mapping itms to the service
+         **/
+        resetState: function(keyName) {
+            var serviceInstance = service.mapping[keyName].instance;
+            var data = service.mapping[keyName].data;
+            var fullKey;
+           Object.keys(data).forEach(function(key) {
+                fullKey = service.namespace + key;
+                // remove the value from the persistence layer and set to the default one
+                $window.localStorageremoveItem(fullKey);
+                serviceInstance[key] = service.mapping[keyName].data[key];
+           }); 
         }
     };
 
+    function recoverValue(serviceInstanceVal, recoveredVal, keyName, key) {
+        if (typeof serviceInstanceVal === 'object') {
+            angular.copy(recoveredVal, serviceInstanceVal);
+        } else {
+            service.mapping[keyName].instance[key] = recoveredVal;
+        }
+    }
+
     function handleObject(keyName, obj) {
         Object.keys(obj).forEach(function(key) {
-            service.mapping[keyName].objects[key] = obj[key];   
+            service.mapping[keyName].data[key] = obj[key];   
         });
     }
 
     function handleString(keyName, field) {
-        service.mapping[keyName].objects[field] = undefined;   
+        service.mapping[keyName].data[field] = undefined;   
     }
 
     return service;
