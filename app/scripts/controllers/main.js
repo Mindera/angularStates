@@ -17,10 +17,10 @@ angular.module('angularStates')
     };
     $scope.reset = function() {
       service.reset();
-    }
+    };
     $scope.action = function() {
       service.update();
       service.save();
-    }
+    };
 
 }]);

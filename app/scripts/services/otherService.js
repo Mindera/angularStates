@@ -7,7 +7,7 @@ angular.module('angularStates')
         stuff: {
             cenas: 12,
             array: [1,2,3,4],
-            nome: "User"
+            nome: 'User'
         },
         outraInfo: {
             ok: true
