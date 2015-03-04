@@ -221,18 +221,21 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
+     uglify: {
+       dist: {
+         files: {
+           '<%= yeoman.dist %>/angularStates.js': [
+             '<%= yeoman.dist %>/angularStates.js'
+           ]
+         }
+       }
+     },
+     concat: {
+       dist: {
+             src: ['<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/services/StatesService.js'],
+             dest: '<%= yeoman.dist %>/angularStates.js',
+       }
+     },
 
     imagemin: {
       dist: {
@@ -332,11 +335,6 @@ module.exports = function (grunt) {
       ],
       test: [
         'copy:styles'
-      ],
-      dist: [
-        'copy:styles',
-        'imagemin',
-        'svgmin'
       ]
     },
 
@@ -380,19 +378,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'wiredep',
-    'useminPrepare',
-    'concurrent:dist',
-    'autoprefixer',
-    'concat',
+    'concat:dist',
     'ngAnnotate',
-    'copy:dist',
     'cdnify',
-    'cssmin',
     'uglify',
-    'filerev',
-    'usemin',
-    'htmlmin'
+    'filerev'
   ]);
 
   grunt.registerTask('default', [
