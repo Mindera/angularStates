@@ -76,3 +76,10 @@ service mapping
 - fieldName `String` - property name
 expiration time  
 
+### Work In Progress
+
+Currently the following features are being implemented:
+
+    * Adapters for more persistence methods (cookies / indexDB / etc) as currently the Local Storage is the default
+    * Expiration time validations
+

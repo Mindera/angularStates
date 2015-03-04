@@ -1,6 +1,6 @@
 {
   "name": "angular-states",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "angular": "^1.3.0",
     "json3": "^3.3.0",
@@ -11,5 +11,25 @@
     "angular-mocks": "~1.3.0",
     "angular-scenario": "~1.3.0"
   },
-  "appPath": "app"
+  "appPath": "app",
+  "homepage": "https://github.com/Mindera/angularStates",
+  "authors": [
+    "Mindera"
+  ],
+  "description": "Angular JS Service for managing service states (saving / restoring / invalidating)",
+  "main": "dist/angularStates.js",
+  "keywords": [
+    "localstorage",
+    "state",
+    "restore",
+    "expiration"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
