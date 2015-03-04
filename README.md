@@ -63,7 +63,7 @@ Resets the service state
 
 **Params**
 
-- keyName `String` - key used for mapping itms to the service  
+- keyName `String` - key used for mapping items to the service  
 
 <a name="handleString"></a>
 #handleString(keyName, fieldName)
