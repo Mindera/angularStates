@@ -12,7 +12,7 @@ As mentioned in several AngularJS *good practices* lists and [posts](http://todd
 
 However, when keeping the model on services/factories it's sometimes necessary to maintain the state persistent across utilizations, which leads to further validation and (possibily) expiration over time. This service aims to facilitate that task and to make each service state logic easier to apply.
 
-Note: Each service/factory values to be persisted should be made public so that the service can work correctly.
+**Note**: Each service/factory values to be persisted should be made public so that the service can work correctly.
 
 ## Usage
 
@@ -26,7 +26,6 @@ Include the 'angularStates' module as a dependency on your app, and include the 
 * [saveState(keyName)](#saveState)
 * [recoverState(keyName)](#recoverState)
 * [resetState(keyName)](#resetState)
-* [handleString(keyName, fieldName)](#handleString)
  
 <a name="register"></a>
 #register(serviceInstance, keyName, fields)
@@ -64,17 +63,6 @@ Resets the service state
 **Params**
 
 - keyName `String` - key used for mapping items to the service  
-
-<a name="handleString"></a>
-#handleString(keyName, fieldName)
-Save the string passed to the register method, saving it to the data property on the
-service mapping
-
-**Params**
-
-- keyName `String` - name registered by service  
-- fieldName `String` - property name
-expiration time  
 
 ### Work In Progress
 
