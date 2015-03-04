@@ -105,22 +105,43 @@ angular.module('angularStates')
         }
     };
 
-    function recoverValue(serviceInstanceVal, recoveredVal, keyName, key) {
-        if (typeof serviceInstanceVal === 'object') {
-            angular.copy(recoveredVal, serviceInstanceVal);
+    /**
+     * Recovers a value back to the serve instance
+     * @param {Object} serviceObjectValue object from service instance (to be updated)
+     * @param {Object|String|Number} recoveredVal value recovered from persistence layer
+     * @param {String} keyName name registered by service (used in mapping)
+     * @param {String} key     field name
+     **/
+    function recoverValue(serviceObjectValue, recoveredVal, keyName, key) {
+        if (typeof serviceObjectValue === 'object') {
+            angular.copy(recoveredVal, serviceObjectValue);
         } else {
             service.mapping[keyName].instance[key] = recoveredVal;
         }
     }
 
+    /**
+     * Save the object passed to the register method, saving it to the data property on the
+     * service mapping
+     * @param {String} keyName name registered by service
+     * @param {Object} obj     object passed to the register method, specifying default value and
+     * expiration time
+     **/
     function handleObject(keyName, obj) {
         Object.keys(obj).forEach(function(key) {
             service.mapping[keyName].data[key] = obj[key];   
         });
     }
 
-    function handleString(keyName, field) {
-        service.mapping[keyName].data[field] = undefined;   
+    /**
+     * Save the string passed to the register method, saving it to the data property on the
+     * service mapping
+     * @param {String} keyName name registered by service
+     * @param {String} fieldName property name
+     * expiration time
+     **/
+    function handleString(keyName, fieldName) {
+        service.mapping[keyName].data[fieldName] = undefined;   
     }
 
     return service;
