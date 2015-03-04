@@ -3,7 +3,7 @@ Angular JS Service for managing service states (saving / restoring / invalidatin
 
 ## Installation
 
-Just do a ``bower install angularstates``.
+Just do ``bower install angular-states``.
 
 ## Why?
 
