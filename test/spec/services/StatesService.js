@@ -15,18 +15,50 @@ describe('Service: StatesService', function () {
     }]));
 
     describe('Register Function', function() {
-        it('should throw an error if the same key is used by one than more service', function() {
+        var service1;
+        beforeEach(function () {
+            service1 = {
+                name: 'service1', 
+                data: {
+                    booleanValue: true,
+                    strValue: 'John', 
+                    arrayValue: [1,2,3],
+                    objValue: {}
+                },
+                otherData: {
+                    stuff: 'info'
+                },
+                init: function() {
+                    statesService.register(this, this.name, ['data', {'otherData': {}}]);
+                    statesService.recoverState(this.name);
+                },
+                save: function() {
+                    statesService.saveState(this.name);
+                },
+                reset: function() {
+                    statesService.resetState(this.name);
+                }
+            };
+        });
+
+        it('should create an entry for each service registered, with the correct format', function() {
+            // register service1
+            service1.init();
+           console.log(statesService.mapping); 
+            
+          //expect(condition).toEqual();
+        });
+          
+        it('should throw an error if the same register key is used by one than more service', function() {
             var name = "same name";
             var s1 = {name: name, data: [1,2,3]};
             var s2 = {name: name, data: [4,5,6]};
 
             // 1s service registers
-            service.register(s1.name, ['data']);
+            statesService.register(s1, s1.name, ['data']);
             
             // 2nd service registers
-            expect( function(){ service.register(s2.name, ['data']).toThrow(new Error("keyName " + name + " already in use."));
-            
-            expect(true).toBe(true);
+            expect( function(){ statesService.register(s2, s2.name, ['data'])}).toThrow(new Error('keyName \"' + name + '\" already in use.'));
         });
     });
 });
