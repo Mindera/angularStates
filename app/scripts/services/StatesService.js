@@ -83,7 +83,7 @@ angular.module('angularStates')
                     recoveredVal = JSON.parse(recoveredValStr);
                     recoverValue(serviceInstance[key], recoveredVal, keyName, key);
                 } else {
-                    recoverValue(serviceInstance[key], service.mapping[keyName].data[key]);
+                    recoverValue(serviceInstance[key], service.mapping[keyName].data[key], keyName, key);
                 }
             }); 
         },
@@ -99,7 +99,7 @@ angular.module('angularStates')
            Object.keys(data).forEach(function(key) {
                 fullKey = service.namespace + key;
                 // remove the value from the persistence layer and set to the default one
-                $window.localStorageremoveItem(fullKey);
+                $window.localStorage.removeItem(fullKey);
                 serviceInstance[key] = service.mapping[keyName].data[key];
            }); 
         }
@@ -113,6 +113,12 @@ angular.module('angularStates')
      * @param {String} key     field name
      **/
     function recoverValue(serviceObjectValue, recoveredVal, keyName, key) {
+        // if the recoveredVal is the same as the destination object 
+        // when the default value for recovering is the services's self initial property
+        // value, don't copy or assign, just return
+        if (serviceObjectValue === recoveredVal) {
+            return;
+        }
         if (typeof serviceObjectValue === 'object') {
             angular.copy(recoveredVal, serviceObjectValue);
         } else {

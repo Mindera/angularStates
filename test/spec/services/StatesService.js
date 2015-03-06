@@ -14,7 +14,7 @@ describe('Service: StatesService', function () {
         windowMock = $window;
     }]));
 
-    describe('Register Function', function() {
+    describe('Register Functionionality', function() {
         var service1;
         beforeEach(function () {
             service1 = {
@@ -32,6 +32,9 @@ describe('Service: StatesService', function () {
                     statesService.register(this, this.name, ['data', {'otherData': {}}]);
                     statesService.recoverState(this.name);
                 },
+                load: function() {
+                    statesService.recoverState(this.name)
+                },
                 save: function() {
                     statesService.saveState(this.name);
                 },
@@ -44,11 +47,27 @@ describe('Service: StatesService', function () {
         it('should create an entry for each service registered, with the correct format', function() {
             // register service1
             service1.init();
-           console.log(statesService.mapping); 
-            
-          //expect(condition).toEqual();
+						// assert stuff
+            expect(Object.keys(statesService.mapping).length === 1);
+            expect(statesService.mapping[service1.name] === service1);
         });
-          
+
+				it('should populate the default values for each service field', function() {
+            // register service1
+            service1.init();
+
+						// assert stuff
+						// the default data for service1 registration should be 2 (number of fields registered)
+						expect(Object.keys(statesService.mapping[service1.name].data).length).toEqual(2);
+
+						// default value for service1.otherData should be the provided ({})
+					 	expect(statesService.mapping[service1.name].data['otherData']).toEqual({});
+
+						// default value for service1.data should be default (undefined) as it wasn't provided by the service
+					 	expect(statesService.mapping[service1.name].data['data']).toEqual(undefined);
+				});
+
+				
         it('should throw an error if the same register key is used by one than more service', function() {
             var name = "same name";
             var s1 = {name: name, data: [1,2,3]};
