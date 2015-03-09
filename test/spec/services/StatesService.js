@@ -5,9 +5,8 @@ describe('Service: StatesService', function () {
     // load the controller's module
     beforeEach(module('angularStates'));
 
-    var windowMock,
-    statesService,
-    scope;
+    var windowMock;
+    var statesService;
 
     beforeEach(inject(['StatesService', '$window', function(_statesService_, $window) {
         statesService = _statesService_;
@@ -32,7 +31,7 @@ describe('Service: StatesService', function () {
                     statesService.register(this, this.name, ['data', {'otherData': {}}]);
                 },
                 load: function() {
-                    statesService.recoverState(this.name)
+                    statesService.recoverState(this.name);
                 },
                 save: function() {
                     statesService.saveState(this.name);
@@ -62,14 +61,14 @@ describe('Service: StatesService', function () {
             expect(Object.keys(statesService.mapping[service1.name].data).length).toEqual(2);
 
             // default value for service1.otherData should be the provided ({})
-            expect(statesService.mapping[service1.name].data['otherData']).toEqual({});
+            expect(statesService.mapping[service1.name].data.otherData).toEqual({});
 
             // default value for service1.data should be default (undefined) as it wasn't provided by the service
-            expect(statesService.mapping[service1.name].data['data']).toEqual(undefined);
+            expect(statesService.mapping[service1.name].data.data).toEqual(undefined);
         });
 
         it('should throw an error if the same register key is used by one than more service', function() {
-            var name = "same name";
+            var name = 'same name';
             var s1 = {name: name, data: [1,2,3]};
             var s2 = {name: name, data: [4,5,6]};
 
@@ -77,12 +76,15 @@ describe('Service: StatesService', function () {
             statesService.register(s1, s1.name, ['data']);
 
             // 2nd service registers
-            expect( function(){ statesService.register(s2, s2.name, ['data'])}).toThrow(new Error('keyName \"' + name + '\" already in use.'));
+            expect( function(){ statesService.register(s2, s2.name, ['data']);}).toThrow(new Error('keyName \"' + name + '\" already in use.'));
         });
     });
 
-    describe('recover State functionality', function () {
+    describe('recoverState function', function () {
         var service1;
+        var otherDataDefaultValue = {
+            stuff: 'default value'
+        };
         beforeEach(function () {
             service1 = {
                 name: 'service1', 
@@ -96,10 +98,10 @@ describe('Service: StatesService', function () {
                     stuff: 'info'
                 },
                 init: function() {
-                    statesService.register(this, this.name, ['data', {'otherData': {}}]);
+                    statesService.register(this, this.name, ['data', {'otherData': otherDataDefaultValue}]);
                 },
                 load: function() {
-                    statesService.recoverState(this.name)
+                    statesService.recoverState(this.name);
                 },
                 save: function() {
                     statesService.saveState(this.name);
@@ -136,7 +138,23 @@ describe('Service: StatesService', function () {
             // check state
             expect(service1.data.booleanValue).toEqual(true);
         });
+
+        it('should recover default values (for unexisting fields) correctly', function() {
+            // 'data' property should be retrieved as empty since no default value was provied   
+            // and 'otherData' should be retrieved as the default object provided
+
+            // init service and recover state
+            service1.init();
+            service1.load();
+
+            // assertions
+            expect(service1.data).toEqual({});
+            expect(service1.otherData).toEqual(otherDataDefaultValue);
+        });
+
+        it('shoul.', function() {
+          expect(condition).toEqual();
+        });
+
     });
-
-
 });
