@@ -142,6 +142,8 @@ angular.module('angularStates')
     /**
      * Save the string passed to the register method, saving it to the data property on the
      * service mapping
+     * Note: This function is needed because even if it does not add new info to the default
+     * data set, it adds a new key, which is more semantic and facilitates work afterwards.
      * @param {String} keyName name registered by service
      * @param {String} fieldName property name
      * expiration time
