@@ -1,6 +1,4 @@
-'use strict';
-
-describe('Service: StatesService', function () {
+'use strict'; describe('Service: StatesService', function () {
 
     // load the controller's module
     beforeEach(module('angularStates'));
@@ -13,7 +11,7 @@ describe('Service: StatesService', function () {
         windowMock = $window;
     }]));
 
-    describe('Register Functionionality', function() {
+    describe('register function', function() {
         var service1;
         beforeEach(function () {
             service1 = {
@@ -97,6 +95,7 @@ describe('Service: StatesService', function () {
                 otherData: {
                     stuff: 'info'
                 },
+                staticData: true,
                 init: function() {
                     statesService.register(this, this.name, ['data', {'otherData': otherDataDefaultValue}]);
                 },
@@ -152,8 +151,29 @@ describe('Service: StatesService', function () {
             expect(service1.otherData).toEqual(otherDataDefaultValue);
         });
 
-        it('shoul.', function() {
-          expect(condition).toEqual();
+        it('should not affect the service properties that are not registered in the states service.', function() {
+            // register and init service
+            service1.init();
+            service1.update();
+            
+            // save state
+            service1.load();
+
+           // check that staticData is not affected
+            expect(service1.staticData).toEqual(true);
+        });
+
+        fit('should not use angular.copy fn when the recovered value is the same of the destiny', function() {
+            service1.init = function() {
+                statesService.register(this, this.name, ['data', {'otherData': service1.otherData}]);
+            };
+
+            service1.init();
+            spyOn(angular, 'copy');
+            var initialCount = angular.copy.calls.count();
+            service1.load();
+            expect(angular.copy.calls.count()).toEqual(initialCount);
+
         });
 
     });

@@ -16,6 +16,8 @@ module.exports = function(config) {
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
 
+    reporters: ['progress', 'html', 'coverage'], 
+
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular/angular.js',
@@ -25,6 +27,30 @@ module.exports = function(config) {
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
+
+
+     // the default configuration 
+    htmlReporter: {
+      outputDir: 'karma_html', // where to put the reports  
+      templatePath: null, // set if you moved jasmine_template.html 
+      focusOnFailures: true, // reports show failures on start 
+      namedFiles: false, // name files instead of creating sub-directories 
+      pageTitle: null, // page title for reports; browser info by default 
+      urlFriendlyName: false // simply replaces spaces with _ for files/dirs 
+    },
+
+    // optionally, configure the reporter
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
+
+     //preprocessors: {
+      //// source files, that you wanna generate coverage for
+      //// do not include tests or libraries
+      //// (these files will be instrumented by Istanbul)
+      //'app/scripts/services/StatesService.js': ['coverage'],
+    //},
 
     // list of files / patterns to exclude
     exclude: [],
@@ -48,6 +74,8 @@ module.exports = function(config) {
     plugins: [
       'karma-chrome-launcher',
       'karma-phantomjs-launcher',
+      'karma-html-reporter',      
+      'karma-coverage',
       'karma-jasmine'
     ],
 

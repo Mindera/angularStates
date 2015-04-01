@@ -119,7 +119,7 @@ angular.module('angularStates')
         if (serviceObjectValue === recoveredVal) {
             return;
         }
-        if (typeof serviceObjectValue === 'object') {
+        if (typeof serviceObjectValue === 'object' && recoveredVal !== serviceObjectValue) {
             angular.copy(recoveredVal, serviceObjectValue);
         } else {
             service.mapping[keyName].instance[key] = recoveredVal;
