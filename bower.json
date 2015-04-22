@@ -26,6 +26,8 @@
   ],
   "license": "MIT",
   "ignore": [
+    "coverage",
+    "karma_html",
     "**/.*",
     "app",
     "*.md",
