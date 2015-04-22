@@ -17,7 +17,7 @@
     "Mindera"
   ],
   "description": "Angular JS Service for managing service states (saving / restoring / invalidating)",
-  "main": "dist/angularStates.js",
+  "main": "dist/angularStates.min.js",
   "keywords": [
     "localstorage",
     "state",

@@ -4,7 +4,7 @@ angular.module('angularStates')
 .factory('StatesService', ['$window', '$rootElement', function ($window, $rootElement) {
     // TODO: Some stuff to implement in the future:
     // - expiration time for each object saved
-    // - adapters so that it uses cookies/indexDB for example
+    // - adapters so that it supports cookies/indexDB for example
     // - reset state method
 
     var service = {
@@ -89,24 +89,31 @@ angular.module('angularStates')
         },
 
         /**
-         * Resets the service state
-         * @param {String} keyName key used for mapping itms to the service
+         * Resets the service state and clears the storage of that service
+         * @param {String} keyName key used for mapping items to the service
          **/
         resetState: function(keyName) {
-            var serviceInstance = service.mapping[keyName].instance;
+            service.recoverState(keyName);
+            service.clearStorage(keyName);
+        },
+
+        /**
+         * Clears the service state on the persistence layer
+         * @param {String} keyName key used for mapping items to the service
+         **/
+        clearStorage: function(keyName) {
             var data = service.mapping[keyName].data;
             var fullKey;
            Object.keys(data).forEach(function(key) {
                 fullKey = service.namespace + key;
                 // remove the value from the persistence layer and set to the default one
                 $window.localStorage.removeItem(fullKey);
-                serviceInstance[key] = service.mapping[keyName].data[key];
            }); 
         }
     };
 
     /**
-     * Recovers a value back to the serve instance
+     * Recovers a value back to the service instance
      * @param {Object} serviceObjectValue object from service instance (to be updated)
      * @param {Object|String|Number} recoveredVal value recovered from persistence layer
      * @param {String} keyName name registered by service (used in mapping)
@@ -119,7 +126,7 @@ angular.module('angularStates')
         if (serviceObjectValue === recoveredVal) {
             return;
         }
-        if (typeof serviceObjectValue === 'object' && recoveredVal !== serviceObjectValue) {
+        if (typeof serviceObjectValue === 'object' && recoveredVal && recoveredVal !== serviceObjectValue) {
             angular.copy(recoveredVal, serviceObjectValue);
         } else {
             service.mapping[keyName].instance[key] = recoveredVal;

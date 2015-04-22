@@ -145,9 +145,9 @@
             // init service and recover state
             service1.init();
             service1.load();
-
+            
             // assertions
-            expect(service1.data).toEqual({});
+            expect(service1.data).not.toBeDefined();
             expect(service1.otherData).toEqual(otherDataDefaultValue);
         });
 
@@ -163,7 +163,7 @@
             expect(service1.staticData).toEqual(true);
         });
 
-        fit('should not use angular.copy fn when the recovered value is the same of the destiny', function() {
+        it('should not use angular.copy fn when the recovered value is the same of the destiny', function() {
             service1.init = function() {
                 statesService.register(this, this.name, ['data', {'otherData': service1.otherData}]);
             };
@@ -173,8 +173,66 @@
             var initialCount = angular.copy.calls.count();
             service1.load();
             expect(angular.copy.calls.count()).toEqual(initialCount);
-
         });
 
     });
+
+    describe('clearStorage and resetState function', function () {
+        var service1;
+        var otherDataDefaultValue = {
+            stuff: 'default value'
+        };
+        beforeEach(function () {
+            service1 = {
+                name: 'service1', 
+                data: {
+                    booleanValue: true,
+                    strValue: 'John', 
+                    arrayValue: [1,2,3],
+                    objValue: {}
+                },
+                otherData: {
+                    stuff: 'info'
+                },
+                staticData: true,
+                init: function() {
+                    statesService.register(this, this.name, ['data', {'otherData': otherDataDefaultValue}]);
+                },
+                load: function() {
+                    statesService.recoverState(this.name);
+                },
+                save: function() {
+                    statesService.saveState(this.name);
+                },
+                clear: function() {
+                    statesService.clearStorage(this.name);
+                },
+                reset: function() {
+                    statesService.resetState(this.name);
+                }
+            };
+            // clean local storage
+            windowMock.localStorage.clear();
+        });
+
+        it('clearStorage function should clear the clear the storage items associated to the registered service', function() {
+            service1.init();
+            service1.save();
+            expect(Object.keys(windowMock.localStorage).length).toEqual(2); 
+            service1.clear();
+            expect(Object.keys(windowMock.localStorage).length).toEqual(0); 
+        });
+
+        fit('resetState function should set the service properties to the default ones and clear the clear the storage items associated to that service', function() {
+            service1.init();
+            service1.save();
+            spyOn(statesService, 'recoverState');
+            spyOn(statesService, 'clearStorage');
+            service1.reset();
+            expect(statesService.recoverState).toHaveBeenCalled();
+            expect(statesService.clearStorage).toHaveBeenCalled();
+
+        });
+    });
+
 });

@@ -224,12 +224,13 @@ module.exports = function (grunt) {
      uglify: {
        dist: {
          files: {
-           '<%= yeoman.dist %>/angularStates.js': [
+           '<%= yeoman.dist %>/angularStates.min.js': [
              '<%= yeoman.dist %>/angularStates.js'
            ]
          }
        }
      },
+
      concat: {
        dist: {
              src: ['<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/services/StatesService.js'],

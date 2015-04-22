@@ -45,12 +45,13 @@ module.exports = function(config) {
       dir : 'coverage/'
     },
 
-     //preprocessors: {
-      //// source files, that you wanna generate coverage for
-      //// do not include tests or libraries
-      //// (these files will be instrumented by Istanbul)
-      //'app/scripts/services/StatesService.js': ['coverage'],
-    //},
+    // comment the next block for debugging prettyfied code
+    preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      'app/scripts/services/StatesService.js': ['coverage'],
+    },
 
     // list of files / patterns to exclude
     exclude: [],
