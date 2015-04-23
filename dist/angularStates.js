@@ -61,7 +61,6 @@ angular.module('angularStates')
         saveState: function(keyName) {
             var serviceInstance = service.mapping[keyName].instance;
             var currentVal;
-            var currentValStr;
             // Save each object for that keyname
             var data = service.mapping[keyName].data;
             Object.keys(data).forEach(function(key) {
@@ -70,8 +69,10 @@ angular.module('angularStates')
                 // if the value is defined, save it to LS, otherwise 
                 // remove it from LS
                 if (typeof currentVal !== 'undefined') {
-                    currentValStr = JSON.stringify(currentVal);
-                    $window.localStorage.setItem(key, currentValStr);
+                    if (typeof currentVal === 'object') {
+                        currentVal = JSON.stringify(currentVal); 
+                    }
+                    $window.localStorage.setItem(key, currentVal);
                 } else {
                     $window.localStorage.removeItem(key); 
                 }
