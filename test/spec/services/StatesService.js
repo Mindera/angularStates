@@ -223,7 +223,7 @@
             expect(Object.keys(windowMock.localStorage).length).toEqual(0); 
         });
 
-        fit('resetState function should set the service properties to the default ones and clear the clear the storage items associated to that service', function() {
+        it('resetState function should set the service properties to the default ones and clear the clear the storage items associated to that service', function() {
             service1.init();
             service1.save();
             spyOn(statesService, 'recoverState');

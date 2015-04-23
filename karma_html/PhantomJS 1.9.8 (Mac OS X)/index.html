@@ -93,20 +93,17 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </style>
 </head>
 
-<body id="HTMLReporter" class="html-reporter showDetails">
-<h1>Tested in PhantomJS 1.9.8 (Mac OS X) on Wed Apr 22 2015</h1>
+<body id="HTMLReporter" class="html-reporter">
+<h1>Tested in PhantomJS 1.9.8 (Mac OS X) on Thu Apr 23 2015</h1>
 
 <div class="alert">
 
 
-<!-- <span class="failingAlert bar">Failed 1 specs</span> -->
-<span class="failingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
-  <a href="#" onclick="unfold();">Unfold</a></span>9 specs, 1 failed, 0 pending</span>
-<span class="resultsMenu bar">
-<a class="summaryMenuItem" onclick="showSummary();" href="#">Spec List<a>|<a 
-   class="detailsMenuItem" onclick="showFailures();" href="#">Failures</a>
-</span>
 
+  
+  <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
+  <a href="#" onclick="unfold();">Unfold</a></span>9 specs, 0 failed, 0 pending</span>
+  
 
 
 </div>
@@ -155,14 +152,14 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
     </div>
   
-    <div class="suite failed">
+    <div class="suite passed">
       <span class="description">Service: StatesService clearStorage and resetState function</span>
     
       <div class="specSummary passed">
       <span class="description">clearStorage function should clear the clear the storage items associated to the registered service</span>
       </div>
     
-      <div class="specSummary failed">
+      <div class="specSummary passed">
       <span class="description">resetState function should set the service properties to the default ones and clear the clear the storage items associated to that service</span>
       </div>
     
@@ -172,19 +169,6 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </div>
 
 <div id="details">
-  
-  
-  <div class="specDetail failed">
-    <span class="description">Service: StatesService clearStorage and resetState function resetState function should set the service properties to the default ones and clear the clear the storage items associated to that service</span>
-    <div class="stackTrace">
-      <div class="resultMessage">TypeError: 'undefined' is not an object (evaluating 'service.mapping[keyName].instance')
-    at http://localhost:8080/base/app/scripts/services/StatesService.js?fa79f7432a8589979d57c7fda09191a3690c41f1:9
-    at http://localhost:8080/base/app/scripts/services/StatesService.js?fa79f7432a8589979d57c7fda09191a3690c41f1:9
-    at http://localhost:8080/base/test/spec/services/StatesService.js?a99281100056c3617cd5541b5fb76655df9482e6:211
-    at http://localhost:8080/base/test/spec/services/StatesService.js?a99281100056c3617cd5541b5fb76655df9482e6:230</div>
-    </div>
-  </div>
-  
   
 </div>
 
@@ -197,7 +181,7 @@ document.body.onkeypress = function (e) {
   switch (e.keyCode) {
     case 102: toggleFold(); break;
     case 49: showSummary(); break;
-    case 50: showFailures(); break;
+    
   }
 };
 
