@@ -26,7 +26,7 @@
                     stuff: 'info'
                 },
                 init: function() {
-                    statesService.register(this, this.name, ['data', {'otherData': {}}]);
+                    statesService.register(this, this.name, ['data', {name: 'otherData', value: {}}]);
                 },
                 load: function() {
                     statesService.recoverState(this.name);
@@ -97,7 +97,7 @@
                 },
                 staticData: true,
                 init: function() {
-                    statesService.register(this, this.name, ['data', {'otherData': otherDataDefaultValue}]);
+                    statesService.register(this, this.name, ['data', {name: 'otherData', value: otherDataDefaultValue}]);
                 },
                 load: function() {
                     statesService.recoverState(this.name);
@@ -165,7 +165,7 @@
 
         it('should not use angular.copy fn when the recovered value is the same of the destiny', function() {
             service1.init = function() {
-                statesService.register(this, this.name, ['data', {'otherData': service1.otherData}]);
+                statesService.register(this, this.name, ['data', {name: 'otherData', value: service1.otherData}]);
             };
 
             service1.init();
@@ -196,7 +196,7 @@
                 },
                 staticData: true,
                 init: function() {
-                    statesService.register(this, this.name, ['data', {'otherData': otherDataDefaultValue}]);
+                    statesService.register(this, this.name, ['data', {name: 'otherData', value: otherDataDefaultValue}]);
                 },
                 load: function() {
                     statesService.recoverState(this.name);

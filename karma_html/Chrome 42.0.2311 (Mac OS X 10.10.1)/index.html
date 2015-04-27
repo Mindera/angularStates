@@ -94,7 +94,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </head>
 
 <body id="HTMLReporter" class="html-reporter">
-<h1>Tested in Chrome 42.0.2311 (Mac OS X 10.10.1) on Wed Apr 22 2015</h1>
+<h1>Tested in Chrome 42.0.2311 (Mac OS X 10.10.1) on Mon Apr 27 2015</h1>
 
 <div class="alert">
 
@@ -115,7 +115,49 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
   
   
     <div class="suite passed">
-      <span class="description"></span>
+      <span class="description">Service: StatesService register function</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create an entry for each service registered, with the correct format</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should populate the default values for each service field</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should throw an error if the same register key is used by one than more service</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Service: StatesService recoverState function</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should override unsaved changes made in the service</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should recover default values (for unexisting fields) correctly</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should not affect the service properties that are not registered in the states service.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should not use angular.copy fn when the recovered value is the same of the destiny</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Service: StatesService clearStorage and resetState function</span>
+    
+      <div class="specSummary passed">
+      <span class="description">clearStorage function should clear the clear the storage items associated to the registered service</span>
+      </div>
     
       <div class="specSummary passed">
       <span class="description">resetState function should set the service properties to the default ones and clear the clear the storage items associated to that service</span>

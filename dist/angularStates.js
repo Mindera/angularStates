@@ -20,7 +20,6 @@ angular.module('angularStates')
     // TODO: Some stuff to implement in the future:
     // - expiration time for each object saved
     // - adapters so that it supports cookies/indexDB for example
-    // - reset state method
 
     var service = {
         namespace: $rootElement.attr('ng-app') ? $rootElement.attr('ng-app') + '.' : '',
@@ -41,12 +40,13 @@ angular.module('angularStates')
             }
             service.mapping[keyName] = {
                 instance: serviceInstance,
-                data: {}
+                data: {},
+                expire: {}
             };
 
             fields.map(function(field) {
-                var type = typeof field;
-                switch (type) {
+                var typeOfArgument = typeof field;
+                switch (typeOfArgument) {
                     case 'object' : handleObject(keyName, field); break;
                     case 'string' : handleString(keyName, field); break;
                     default: break;
@@ -61,7 +61,8 @@ angular.module('angularStates')
         saveState: function(keyName) {
             var serviceInstance = service.mapping[keyName].instance;
             var currentVal;
-            // Save each object for that keyname
+            var now = new Date(), then;
+            // Save each object for that keyName
             var data = service.mapping[keyName].data;
             Object.keys(data).forEach(function(key) {
                 currentVal = serviceInstance[key];
@@ -69,10 +70,18 @@ angular.module('angularStates')
                 // if the value is defined, save it to LS, otherwise 
                 // remove it from LS
                 if (typeof currentVal !== 'undefined') {
-                    if (typeof currentVal === 'object') {
-                        currentVal = JSON.stringify(currentVal); 
+                    // Encapsulate value in wrapper object so that we can use json stringify/parse
+                    // with confidence
+                    var wrapperObj = {
+                        value: currentVal
+                    };
+                    // check if current property has expiration date
+                    if (service.mapping[keyName].expire[key]) {
+                        then = now.getTime();
+                        wrapperObj.expire = then;
                     }
-                    $window.localStorage.setItem(key, currentVal);
+                    wrapperObj = JSON.stringify(wrapperObj); 
+                    $window.localStorage.setItem(key, wrapperObj);
                 } else {
                     $window.localStorage.removeItem(key); 
                 }
@@ -86,18 +95,23 @@ angular.module('angularStates')
         recoverState: function(keyName) {
             var serviceInstance = service.mapping[keyName].instance;
             var recoveredVal;
-            var recoveredValStr;
             var data = service.mapping[keyName].data;
+            var now = new Date();
             var fullKey;
             Object.keys(data).forEach(function(key) {
                 fullKey = service.namespace + key;
                 // if value is defined in the persitence layer, save it to the
                 // service instance, otherwise save the default value present
                 // in the data property of the registry
-                recoveredValStr = $window.localStorage.getItem(fullKey);
-                if (recoveredValStr) {
-                    recoveredVal = JSON.parse(recoveredValStr);
-                    recoverValue(serviceInstance[key], recoveredVal, keyName, key);
+                recoveredVal  = $window.localStorage.getItem(fullKey);
+                if (recoveredVal) {
+                    // unwrap value
+                    recoveredVal = JSON.parse(recoveredVal);
+                    if (!recoveredVal.expire || recoveredVal.expire > now) {
+                        recoverValue(serviceInstance[key], recoveredVal.value , keyName, key);
+                    } else {
+                        recoverValue(serviceInstance[key], service.mapping[keyName].data[key], keyName, key);
+                    }
                 } else {
                     recoverValue(serviceInstance[key], service.mapping[keyName].data[key], keyName, key);
                 }
@@ -152,14 +166,21 @@ angular.module('angularStates')
     /**
      * Save the object passed to the register method, saving it to the data property on the
      * service mapping
-     * @param {String} keyName name registered by service
-     * @param {Object} obj     object passed to the register method, specifying default value and
-     * expiration time
+     * @param {String}     keyName name registered by service
+     * @param {Object}     obj        object passed to the register method, specifying default value and
+     * @param {String}     obj.name   name of the field
+     * @param {*}          obj.value  default value of the field
+     * @param {Numbeer}    obj.expire expiration time for the current data
      **/
     function handleObject(keyName, obj) {
-        Object.keys(obj).forEach(function(key) {
-            service.mapping[keyName].data[key] = obj[key];   
-        });
+        if (obj.value) {
+            service.mapping[keyName].data[obj.name] = obj.value;
+        } else {
+            handleString(keyName, obj.name);
+        }
+        if (obj.expire) {
+            service.mapping[keyName].expire[obj.name] = obj.expire;
+        }
     }
 
     /**
