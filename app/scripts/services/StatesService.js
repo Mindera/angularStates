@@ -92,7 +92,7 @@ angular.module('angularStates')
                 if (recoveredVal) {
                     // unwrap value
                     recoveredVal = JSON.parse(recoveredVal);
-                    if (!recoveredVal.expire || recoveredVal.expire > now) {
+                    if (!recoveredVal.expire || new Date(recoveredVal.expire) > now) {
                         recoverValue(serviceInstance[key], recoveredVal.value , keyName, key);
                     } else {
                         recoverValue(serviceInstance[key], service.mapping[keyName].data[key], keyName, key);
