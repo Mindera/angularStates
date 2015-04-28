@@ -93,20 +93,17 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </style>
 </head>
 
-<body id="HTMLReporter" class="html-reporter showDetails">
-<h1>Tested in PhantomJS 1.9.8 (Mac OS X) on Mon Apr 27 2015</h1>
+<body id="HTMLReporter" class="html-reporter">
+<h1>Tested in PhantomJS 1.9.8 (Mac OS X) on Tue Apr 28 2015</h1>
 
 <div class="alert">
 
 
-<!-- <span class="failingAlert bar">Failed 3 specs</span> -->
-<span class="failingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
-  <a href="#" onclick="unfold();">Unfold</a></span>9 specs, 3 failed, 0 pending</span>
-<span class="resultsMenu bar">
-<a class="summaryMenuItem" onclick="showSummary();" href="#">Spec List<a>|<a 
-   class="detailsMenuItem" onclick="showFailures();" href="#">Failures</a>
-</span>
 
+  
+  <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
+  <a href="#" onclick="unfold();">Unfold</a></span>9 specs, 0 failed, 0 pending</span>
+  
 
 
 </div>
@@ -117,14 +114,14 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
   
   
   
-    <div class="suite failed">
+    <div class="suite passed">
       <span class="description">Service: StatesService register function</span>
     
       <div class="specSummary passed">
       <span class="description">should create an entry for each service registered, with the correct format</span>
       </div>
     
-      <div class="specSummary failed">
+      <div class="specSummary passed">
       <span class="description">should populate the default values for each service field</span>
       </div>
     
@@ -134,14 +131,14 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
     </div>
   
-    <div class="suite failed">
+    <div class="suite passed">
       <span class="description">Service: StatesService recoverState function</span>
     
       <div class="specSummary passed">
       <span class="description">should override unsaved changes made in the service</span>
       </div>
     
-      <div class="specSummary failed">
+      <div class="specSummary passed">
       <span class="description">should recover default values (for unexisting fields) correctly</span>
       </div>
     
@@ -155,10 +152,10 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
     </div>
   
-    <div class="suite failed">
+    <div class="suite passed">
       <span class="description">Service: StatesService clearStorage and resetState function</span>
     
-      <div class="specSummary failed">
+      <div class="specSummary passed">
       <span class="description">clearStorage function should clear the clear the storage items associated to the registered service</span>
       </div>
     
@@ -173,36 +170,6 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 
 <div id="details">
   
-  
-  <div class="specDetail failed">
-    <span class="description">Service: StatesService register function should populate the default values for each service field</span>
-    <div class="stackTrace">
-      <div class="resultMessage">Expected undefined to equal Object({  }).
-    at http://localhost:8080/base/test/spec/services/StatesService.js?faa49a4bf5dd6a459c4c1ec53bb2218536917192:62</div>
-    </div>
-  </div>
-  
-  
-  
-  <div class="specDetail failed">
-    <span class="description">Service: StatesService recoverState function should recover default values (for unexisting fields) correctly</span>
-    <div class="stackTrace">
-      <div class="resultMessage">Expected Object({ stuff: 'info' }) to equal Object({ stuff: 'default value' }).
-    at http://localhost:8080/base/test/spec/services/StatesService.js?faa49a4bf5dd6a459c4c1ec53bb2218536917192:151</div>
-    </div>
-  </div>
-  
-  
-  
-  <div class="specDetail failed">
-    <span class="description">Service: StatesService clearStorage and resetState function clearStorage function should clear the clear the storage items associated to the registered service</span>
-    <div class="stackTrace">
-      <div class="resultMessage">Expected 1 to equal 2.
-    at http://localhost:8080/base/test/spec/services/StatesService.js?faa49a4bf5dd6a459c4c1ec53bb2218536917192:221</div>
-    </div>
-  </div>
-  
-  
 </div>
 
 <script>
@@ -214,7 +181,7 @@ document.body.onkeypress = function (e) {
   switch (e.keyCode) {
     case 102: toggleFold(); break;
     case 49: showSummary(); break;
-    case 50: showFailures(); break;case 50: showFailures(); break;case 50: showFailures(); break;
+    
   }
 };
 

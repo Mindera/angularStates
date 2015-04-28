@@ -62,7 +62,7 @@ angular.module('angularStates')
                     };
                     // check if current property has expiration date
                     if (service.mapping[keyName].expire[key]) {
-                        then = now.getTime();
+                        then = new Date(now.getTime() + service.mapping[keyName].expire[key]);
                         wrapperObj.expire = then;
                     }
                     wrapperObj = JSON.stringify(wrapperObj); 
