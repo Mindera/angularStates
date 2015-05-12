@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {
+    "angular-jsdoc": "^0.3.3",
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",
     "grunt-concurrent": "^0.5.0",
@@ -25,6 +26,7 @@
     "grunt-usemin": "^2.1.1",
     "grunt-wiredep": "^1.7.0",
     "jasmine-core": "^2.2.0",
+    "jsdoc": "^3.3.0",
     "jsdoc-to-markdown": "^0.5.11",
     "jshint-stylish": "^0.2.0",
     "karma": "^0.12.31",
