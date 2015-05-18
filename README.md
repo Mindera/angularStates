@@ -20,54 +20,94 @@ Include the 'angularStates' module as a dependency on your app, and include the 
 
     angular.module('yourApp', ['angularStates', '..'])
 
-### Main Functions
-    
-* [register(serviceInstance, keyName, fields)](#register)
-* [saveState(keyName)](#saveState)
-* [recoverState(keyName)](#recoverState)
-* [resetState(keyName)](#resetState)
- 
-<a name="register"></a>
-#register(serviceInstance, keyName, fields)
+Use the 'StatesService' on every service which needs its state persisted / validated, using the methods described on the documentation.
+
+# Documentation
+## Members
+<dl>
+<dt><a href="#angularStatesApp">angularStatesApp</a></dt>
+<dd><h1 id="angularstatesapp">angularStatesApp</h1>
+<p>Main module of the application.</p>
+</dd>
+<dt><a href="#StatesService">StatesService</a></dt>
+<dd><p>Angular JS Service for managing service states (saving / restoring / invalidating)</p>
+</dd>
+</dl>
+<a name="angularStatesApp"></a>
+## angularStatesApp
+# angularStatesApp
+
+Main module of the application.
+
+**Kind**: global variable  
+**Ngdoc**: overview  
+<a name="StatesService"></a>
+## StatesService
+Angular JS Service for managing service states (saving / restoring / invalidating)
+
+**Kind**: global variable  
+**Ngdoc**: service  
+
+* [StatesService](#StatesService)
+  * [.register(serviceInstance, keyName, fields)](#StatesService.register)
+  * [.saveState(keyName)](#StatesService.saveState)
+  * [.recoverState(keyName)](#StatesService.recoverState)
+  * [.resetState(keyName)](#StatesService.resetState)
+  * [.clearStorage(keyName)](#StatesService.clearStorage)
+
+<a name="StatesService.register"></a>
+### StatesService.register(serviceInstance, keyName, fields)
 Registers a service instance on the persistence service
 
-**Params**
+**Kind**: static method of <code>[StatesService](#StatesService)</code>  
+**Throws**:
 
-- serviceInstance `Object` - registered service instance - for updating its state afterwards  
-- keyName `String` - key used for mapping items the each service  
-- fields `Array` - service properties that should be saved. Note: the elements of this array
-can be strings (name of the field) or objects (containing default value to use in case of absence
-in the persistence layer, and expiration time)  
+- <code>Error</code> will throw if the current keyName is already in use
 
-**Type**: `Error`  
-<a name="saveState"></a>
-#saveState(keyName)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| serviceInstance | <code>Object</code> | registered service instance - for updating its state afterwards |
+| keyName | <code>String</code> | key used for mapping items the each service |
+| fields | <code>Array</code> | service properties that should be saved. Note: the elements of this array can be strings (name of the field) or objects (containing default value to use in case of absence in the persistence layer, and expiration time) |
+
+<a name="StatesService.saveState"></a>
+### StatesService.saveState(keyName)
 Save the service state, based on the values mapped for the keyName provided
 
-**Params**
+**Kind**: static method of <code>[StatesService](#StatesService)</code>  
 
-- keyName `String` - key used for mapping items to the service  
+| Param | Type | Description |
+| --- | --- | --- |
+| keyName | <code>String</code> | key used for mapping items to the service |
 
-<a name="recoverState"></a>
-#recoverState(keyName)
+<a name="StatesService.recoverState"></a>
+### StatesService.recoverState(keyName)
 Recovers the service state
 
-**Params**
+**Kind**: static method of <code>[StatesService](#StatesService)</code>  
 
-- keyName `String` - key used for mapping items to the service  
+| Param | Type | Description |
+| --- | --- | --- |
+| keyName | <code>String</code> | key used for mapping items to the service |
 
-<a name="resetState"></a>
-#resetState(keyName)
-Resets the service state
+<a name="StatesService.resetState"></a>
+### StatesService.resetState(keyName)
+Resets the service state and clears the storage of that service
 
-**Params**
+**Kind**: static method of <code>[StatesService](#StatesService)</code>  
 
-- keyName `String` - key used for mapping items to the service  
+| Param | Type | Description |
+| --- | --- | --- |
+| keyName | <code>String</code> | key used for mapping items to the service |
 
-### Work In Progress
+<a name="StatesService.clearStorage"></a>
+### StatesService.clearStorage(keyName)
+Clears the service state on the persistence layer
 
-Currently the following features are being implemented:
+**Kind**: static method of <code>[StatesService](#StatesService)</code>  
 
-    * Adapters for more persistence methods (cookies / indexDB / etc) as currently the Local Storage is the default
-    * Expiration time validations
+| Param | Type | Description |
+| --- | --- | --- |
+| keyName | <code>String</code> | key used for mapping items to the service |
 

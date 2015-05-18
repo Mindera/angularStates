@@ -339,6 +339,21 @@ module.exports = function (grunt) {
       ]
     },
 
+    // exec stuff
+    exec: {
+      jsdoc: { command: 'node_modules/jsdoc/jsdoc.js -c node_modules/angular-jsdoc/conf.json -t node_modules/angular-jsdoc/template  -d docs -r <%= yeoman.app %>/scripts/services/StatesService.js'} 
+    },
+
+    jsdoc2md: {
+        oneOutputFile: {
+            src: '<%= yeoman.app %>/scripts/**/*.js',
+            dest: "documentation.md",
+            options: {
+                template: 'README.hbs'
+            }
+        }
+    },
+
     // Test settings
     karma: {
       unit: {
@@ -367,6 +382,42 @@ module.exports = function (grunt) {
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
+  });
+
+  grunt.registerTask('jsdoc', 'Recreates documentation and creates doc.md by  attaching it to base.md file', function (target) {
+    var toMarkdown = require('to-markdown');
+    var fs = require('fs');
+    console.log('yo');
+
+    grunt.task.run(['exec:jsdoc',
+                    'jsdoc2md']);
+
+    fs.readFile(('./docs/StatesService.html'), copyContents);
+
+    //fs.readFile('/', 'utf8', function (err,data) {
+      //if (err) {
+          //return console.log(err);
+        //}
+      //console.log(data);
+    //});
+
+
+    function copyContents(err, data) {
+         if (err) {
+             return console.log(err);
+         }
+        // create copy based on base.md
+        // Todo: re-do this copying to check for errors
+        var baseReader = fs.createReadStream('base.md');
+        var readmeWriter = fs.createWriteStream('README.md');
+        baseReader.pipe(readmeWriter, {end: false});
+        baseReader.on('end', function() {
+            var htmlContent = data.toString();
+            var markdownContent = toMarkdown(htmlContent);
+            console.log('MARKDOWN:', markdownContent);
+            readmeWriter.end(markdownContent);     
+        })
+    }
   });
 
   grunt.registerTask('test', [
