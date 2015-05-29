@@ -8,6 +8,7 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
+    var fs = require('fs');
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
@@ -339,18 +340,32 @@ module.exports = function (grunt) {
       ]
     },
 
-    // exec stuff
-    exec: {
-      jsdoc: { command: 'node_modules/jsdoc/jsdoc.js -c node_modules/angular-jsdoc/conf.json -t node_modules/angular-jsdoc/template  -d docs -r <%= yeoman.app %>/scripts/services/StatesService.js'} 
-    },
-
     jsdoc2md: {
         oneOutputFile: {
             src: '<%= yeoman.app %>/scripts/**/*.js',
-            dest: "documentation.md",
+            dest: "README.md",
             options: {
-                template: 'README.hbs'
+               template: fs.readFileSync('README.hbs', 'utf8')
             }
+        }
+    },
+
+    bump: {
+        options: {
+            files: ['bower.json', 'package.json'],
+            updateConfigs: [],
+            commit: true,
+            commitMessage: 'Release v%VERSION%',
+            commitFiles: ['-a'],
+            createTag: true,
+            tagName: 'v%VERSION%',
+            tagMessage: 'Version %VERSION%',
+            push: true,
+            pushTo: 'upstream',
+            gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+            globalReplace: false,
+            prereleaseName: false,
+            regExp: false
         }
     },
 
@@ -435,7 +450,13 @@ module.exports = function (grunt) {
     'ngAnnotate',
     'cdnify',
     'uglify',
-    'filerev'
+    'filerev',
+    'jsdoc2md'
+  ]);
+  
+  grunt.registerTask('release', [
+    'build',
+    'bump'
   ]);
 
   grunt.registerTask('default', [

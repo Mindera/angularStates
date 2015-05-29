@@ -20,14 +20,12 @@ Include the 'angularStates' module as a dependency on your app, and include the 
 
     angular.module('yourApp', ['angularStates', '..'])
 
-Use the 'StatesService' on every service which needs its state persisted / validated, using the methods described on the documentation.
-
-# Documentation
+### Documentation
 ## Members
 <dl>
 <dt><a href="#angularStatesApp">angularStatesApp</a></dt>
 <dd><h1 id="angularstatesapp">angularStatesApp</h1>
-<p>Main module of the application.</p>
+<p>Module of the Angular States.</p>
 </dd>
 <dt><a href="#StatesService">StatesService</a></dt>
 <dd><p>Angular JS Service for managing service states (saving / restoring / invalidating)</p>
@@ -37,7 +35,7 @@ Use the 'StatesService' on every service which needs its state persisted / valid
 ## angularStatesApp
 # angularStatesApp
 
-Main module of the application.
+Module of the Angular States.
 
 **Kind**: global variable  
 **Ngdoc**: overview  
@@ -69,7 +67,7 @@ Registers a service instance on the persistence service
 | --- | --- | --- |
 | serviceInstance | <code>Object</code> | registered service instance - for updating its state afterwards |
 | keyName | <code>String</code> | key used for mapping items the each service |
-| fields | <code>Array</code> | service properties that should be saved. Note: the elements of this array can be strings (name of the field) or objects (containing default value to use in case of absence in the persistence layer, and expiration time) |
+| fields | <code>Array</code> | service properties that should be saved. Note: the elements of this array can be strings (name of the field) or objects. In case of object, they must use the following schema {    name: 'property name', // String    value: defaultValue,   // any type    expire: 1231           // Integer (time of expiration in milliseconds for the current field) } |
 
 <a name="StatesService.saveState"></a>
 ### StatesService.saveState(keyName)

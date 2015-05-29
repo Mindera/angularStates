@@ -2,5 +2,7 @@ node_modules
 .tmp
 .sass-cache
 bower_components
+docs
 coverage
 karma_html
+*.swp

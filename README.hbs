@@ -1,0 +1,24 @@
+# angularStates
+Angular JS Service for managing service states (saving / restoring / invalidating)
+
+## Installation
+
+Just do ``bower install angular-states``.
+
+## Why?
+
+This service is meant to be used as a 'top layer' on the AngularJS app, for saving, restoring, invalidating services/factories states. 
+As mentioned in several AngularJS *good practices* lists and [posts](http://toddmotto.com/rethinking-angular-js-controllers/), using the controller's $scope can lead to a lot of disadvantages (difficult to reuse and test, doesn't separate Model/Controller concers, thight coupling, etc).
+
+However, when keeping the model on services/factories it's sometimes necessary to maintain the state persistent across utilizations, which leads to further validation and (possibily) expiration over time. This service aims to facilitate that task and to make each service state logic easier to apply.
+
+**Note**: Each service/factory values to be persisted should be made public so that the service can work correctly.
+
+## Usage
+
+Include the 'angularStates' module as a dependency on your app, and include the 'StatesService' when it's needed.
+
+    angular.module('yourApp', ['angularStates', '..'])
+
+### Documentation
+{{>main}}

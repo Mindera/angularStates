@@ -49,8 +49,12 @@ angular.module('angularStates')
          * @param {Object} serviceInstance registered service instance - for updating its state afterwards
          * @param {String} keyName key used for mapping items the each service
          * @param {Array}  fields service properties that should be saved. Note: the elements of this array
-         * can be strings (name of the field) or objects (containing default value to use in case of absence
-         * in the persistence layer, and expiration time)
+         * can be strings (name of the field) or objects. In case of object, they must use the following schema
+         * {
+         *    name: 'property name', // String
+         *    value: defaultValue,   // any type
+         *    expire: 1231           // Integer (time of expiration in milliseconds for the current field)
+         * }
          * @throws {Error} will throw if the current keyName is already in use  
          **/
         register: function(serviceInstance, keyName, fields) {

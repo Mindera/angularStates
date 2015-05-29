@@ -6,7 +6,7 @@
  * @description
  * # angularStatesApp
  *
- * Main module of the application.
+ * Module of the Angular States.
  */
 angular
   .module('angularStates', [

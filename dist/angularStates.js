@@ -6,19 +6,25 @@
  * @description
  * # angularStatesApp
  *
- * Main module of the application.
+ * Module of the Angular States.
  */
 angular
   .module('angularStates', [
     'ngCookies'
   ]);
 
+/**
+ * @ngdoc service
+ * @name StatesService
+ * @description 
+ *   Angular JS Service for managing service states (saving / restoring / invalidating)
+ */
+
 'use strict';
 
 angular.module('angularStates')
 .factory('StatesService', ['$window', '$rootElement', function ($window, $rootElement) {
     // TODO: Some stuff to implement in the future:
-    // - expiration time for each object saved
     // - adapters so that it supports cookies/indexDB for example
 
     var service = {
@@ -27,11 +33,16 @@ angular.module('angularStates')
 
         /**
          * Registers a service instance on the persistence service
+         * @memberof StatesService
          * @param {Object} serviceInstance registered service instance - for updating its state afterwards
          * @param {String} keyName key used for mapping items the each service
          * @param {Array}  fields service properties that should be saved. Note: the elements of this array
-         * can be strings (name of the field) or objects (containing default value to use in case of absence
-         * in the persistence layer, and expiration time)
+         * can be strings (name of the field) or objects. In case of object, they must use the following schema
+         * {
+         *    name: 'property name', // String
+         *    value: defaultValue,   // any type
+         *    expire: 1231           // Integer (time of expiration in milliseconds for the current field)
+         * }
          * @throws {Error} will throw if the current keyName is already in use  
          **/
         register: function(serviceInstance, keyName, fields) {
@@ -56,6 +67,7 @@ angular.module('angularStates')
 
         /**
          * Save the service state, based on the values mapped for the keyName provided
+         * @memberof StatesService
          * @param {String} keyName key used for mapping items to the service
          **/
         saveState: function(keyName) {
@@ -90,6 +102,7 @@ angular.module('angularStates')
 
         /**
          * Recovers the service state
+         * @memberof StatesService
          * @param {String} keyName key used for mapping items to the service
          **/
         recoverState: function(keyName) {
@@ -120,6 +133,7 @@ angular.module('angularStates')
 
         /**
          * Resets the service state and clears the storage of that service
+         * @memberof StatesService
          * @param {String} keyName key used for mapping items to the service
          **/
         resetState: function(keyName) {
@@ -129,6 +143,7 @@ angular.module('angularStates')
 
         /**
          * Clears the service state on the persistence layer
+         * @memberof StatesService
          * @param {String} keyName key used for mapping items to the service
          **/
         clearStorage: function(keyName) {

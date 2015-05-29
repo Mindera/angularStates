@@ -139,7 +139,7 @@
 <dt>
     
     
-      <a href="StatesService.js.html#line130" class="name-link"><h4 class="name" id=".clearStorage">clearStorage<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
+      <a href="StatesService.js.html#line134" class="name-link"><h4 class="name" id=".clearStorage">clearStorage<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
     
 
     
@@ -230,7 +230,7 @@
     <!-- commented out by Allen Kim
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line130">line 130</a>
+        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line134">line 134</a>
     </li></ul></dd>
     -->
     
@@ -263,7 +263,7 @@
 <dt>
     
     
-      <a href="StatesService.js.html#line89" class="name-link"><h4 class="name" id=".recoverState">recoverState<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
+      <a href="StatesService.js.html#line93" class="name-link"><h4 class="name" id=".recoverState">recoverState<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
     
 
     
@@ -354,7 +354,7 @@
     <!-- commented out by Allen Kim
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line89">line 89</a>
+        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line93">line 93</a>
     </li></ul></dd>
     -->
     
@@ -387,7 +387,7 @@
 <dt>
     
     
-      <a href="StatesService.js.html#line29" class="name-link"><h4 class="name" id=".register">register<span class="signature">(serviceInstance, keyName, fields)</span><span class="type-signature"></span></h4></a>
+      <a href="StatesService.js.html#line33" class="name-link"><h4 class="name" id=".register">register<span class="signature">(serviceInstance, keyName, fields)</span><span class="type-signature"></span></h4></a>
     
 
     
@@ -493,8 +493,12 @@
             
 
             <td class="description last"><p>service properties that should be saved. Note: the elements of this array
-can be strings (name of the field) or objects (containing default value to use in case of absence
-in the persistence layer, and expiration time)</p></td>
+can be strings (name of the field) or objects. In case of object, they must use the following schema
+{
+   name: 'property name', // String
+   value: defaultValue,   // any type
+   expire: 1231           // Integer (time of expiration in milliseconds for the current field)
+}</p></td>
         </tr>
 
     
@@ -526,7 +530,7 @@ in the persistence layer, and expiration time)</p></td>
     <!-- commented out by Allen Kim
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line29">line 29</a>
+        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line33">line 33</a>
     </li></ul></dd>
     -->
     
@@ -586,7 +590,7 @@ in the persistence layer, and expiration time)</p></td>
 <dt>
     
     
-      <a href="StatesService.js.html#line120" class="name-link"><h4 class="name" id=".resetState">resetState<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
+      <a href="StatesService.js.html#line124" class="name-link"><h4 class="name" id=".resetState">resetState<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
     
 
     
@@ -677,7 +681,7 @@ in the persistence layer, and expiration time)</p></td>
     <!-- commented out by Allen Kim
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line120">line 120</a>
+        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line124">line 124</a>
     </li></ul></dd>
     -->
     
@@ -710,7 +714,7 @@ in the persistence layer, and expiration time)</p></td>
 <dt>
     
     
-      <a href="StatesService.js.html#line54" class="name-link"><h4 class="name" id=".saveState">saveState<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
+      <a href="StatesService.js.html#line58" class="name-link"><h4 class="name" id=".saveState">saveState<span class="signature">(keyName)</span><span class="type-signature"></span></h4></a>
     
 
     
@@ -801,7 +805,7 @@ in the persistence layer, and expiration time)</p></td>
     <!-- commented out by Allen Kim
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line54">line 54</a>
+        <a href="StatesService.js.html">StatesService.js</a>, <a href="StatesService.js.html#line58">line 58</a>
     </li></ul></dd>
     -->
     
